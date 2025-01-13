@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-# Displays listening ports
-netstat -lp
+# A script to display all listening ports and associated processes using ss
+
+# Display listening ports with associated processes
+ss -lptn
