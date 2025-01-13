@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
-# Displays listening ports
-netstat -lp
+
+# Displays listening ports with program info
+# Requires sudo privileges for complete program information
+
+# Check if running with sudo
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run with sudo for complete program information"
+    exit 1
+fi
+
+# Use ss command (preferred over netstat as it's newer)
+ss -ltnp
