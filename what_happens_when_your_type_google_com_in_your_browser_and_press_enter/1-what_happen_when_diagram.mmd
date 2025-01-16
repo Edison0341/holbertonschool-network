@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant Browser
+    participant DNS as DNS Server
+    participant FW as Firewall
+    participant LB as Load Balancer
+    participant WS as Web Server
+    participant AS as App Server
+    participant DB as Database
+
+    Browser->>DNS: 1. DNS query: google.com
+    DNS-->>Browser: 2. Returns IP address
+    
+    Note over Browser,DNS: DNS Resolution Phase
+
+    Browser->>FW: 3. HTTPS request to IP:443
+    Note over Browser,FW: Encrypted SSL/TLS traffic
+    
+    FW->>LB: 4. Passes verified traffic
+    
+    LB->>WS: 5. Routes to available server
+    
+    WS->>AS: 6. Forwards request
+    
+    AS->>DB: 7. Queries data
+    DB-->>AS: 8. Returns data
+    
+    AS-->>WS: 9. Returns generated page
+    
+    WS-->>LB: 10. Sends response
+    
+    LB-->>FW: 11. Routes response
+    
+    FW-->>Browser: 12. Delivers encrypted response
+    
+    Note over Browser,DB: All traffic after DNS resolution<br/>is encrypted via HTTPS/SSL
